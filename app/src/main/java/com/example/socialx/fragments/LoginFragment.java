@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,11 +45,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class LoginFragment extends Fragment {
     public static final String EMAIL = "email";
     private static final int RC_SIGN_IN = 1000;
-    private LoginButton fbLoginButton;
+    private ImageButton fbLoginButton;
     private FirebaseAuth mAuth;
     private EditText mEmail, mPassword;
     private ProgressDialog mProgressDialog;
@@ -84,7 +88,7 @@ public class LoginFragment extends Fragment {
 
         login.setOnClickListener(v -> Login());
         forgot.setOnClickListener(v -> ForgotPassword());
-        fbLoginButton = (LoginButton) view.findViewById(R.id.fb_signin);
+        fbLoginButton = (ImageButton) view.findViewById(R.id.fb_signin);
         facebookLogin();
 
         SignInButton googleSignInButton = view.findViewById(R.id.google_signin);
@@ -109,10 +113,9 @@ public class LoginFragment extends Fragment {
         }
     }
     private void facebookLogin() {
-        fbLoginButton.setReadPermissions(Arrays.asList(EMAIL));
-        fbLoginButton.setFragment(this);
+        fbLoginButton.setOnClickListener(v -> LoginManager.getInstance().logInWithReadPermissions(getVisibleFragment(),Arrays.asList(EMAIL)));
         callbackManager = CallbackManager.Factory.create();
-        fbLoginButton.registerCallback(callbackManager,
+        LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
@@ -143,6 +146,17 @@ public class LoginFragment extends Fragment {
                         updateUI();
                     }
                 });
+    }
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
     private void Login() {
         final String email = mEmail.getText().toString();

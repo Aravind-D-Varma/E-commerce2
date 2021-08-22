@@ -20,4 +20,6 @@
     <string name="title_activity_accounts">AccountsActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="NDopen">open</string>
+    <string name="NDclose">close</string>
 </resources>

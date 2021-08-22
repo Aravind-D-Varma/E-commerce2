@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -40,6 +41,8 @@ public class AccountsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml("<font color = \"#FFFFFF\">" + getString(R.string.app_name)+"</font"));
         setContentView(R.layout.activity_accounts);
         simpleFrameLayout = (FrameLayout) findViewById(R.id.simpleFrameLayout);
+        simpleFrameLayout.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        simpleFrameLayout.setClipToOutline(true);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setSelectedTabIndicatorColor(Color.parseColor("#FF0000"));
 

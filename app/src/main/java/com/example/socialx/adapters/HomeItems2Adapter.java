@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.socialx.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -32,7 +34,8 @@ public class HomeItems2Adapter extends RecyclerView.Adapter<HomeItems2Adapter.My
     @Override
     public void onBindViewHolder(@NonNull HomeItems2Adapter.MyViewHolder holder, int position) {
         holder.tv1.setText(shopItems.get(position));
-        holder.img.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        Glide.with(mContext).load(R.drawable.images__2_).into(holder.img);
+        //holder.img.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.images__2_));
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

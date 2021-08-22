@@ -91,27 +91,32 @@
         android:text="Login with"
         android:textColor="@color/black"/>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/fb_signin"
+    <LinearLayout
+        android:id="@+id/anchor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/loginwith_text"
+        android:layout_centerHorizontal="true">
+        <ImageButton
+        android:id="@+id/fb_signin"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:layout_alignParentStart="true"/>
+        android:background="@drawable/com_facebook_button_icon"
+        android:backgroundTint="#0000FF"
+            android:layout_marginEnd="10dp"/>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_signin"
-        android:layout_below="@id/loginwith_text"
-        android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </com.google.android.gms.common.SignInButton>
-
-
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp">
+        </com.google.android.gms.common.SignInButton>
+    </LinearLayout>
 
     <Button
         android:id="@+id/login_register"
-        android:layout_below="@id/google_signin"
+        android:layout_below="@id/anchor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

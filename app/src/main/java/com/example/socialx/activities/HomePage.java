@@ -5,9 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -28,6 +33,8 @@ public class HomePage extends AppCompatActivity {
     private RecyclerView mRV1,mRV1_5,mRV2,mRV3,mRV4,mRV5;
     private HomeItemsAdapter mRVAdapter;
     private VPAdapter mVPAdapter;
+    private DrawerLayout mDrawerLayout;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -39,6 +46,14 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+        mDrawerLayout = findViewById(R.id.drawerlayout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.NDopen, R.string.NDclose);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.setHomeAsUpIndicator(R.drawable.drawericon);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toggle.syncState();
 
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -62,7 +77,22 @@ public class HomePage extends AppCompatActivity {
         homeFourthItem(mRV3,true);
         homeFourthItem(mRV5,false);
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        if (item.getItemId() == android.R.id.home) {
+            return closeAndOpenDrawer();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean closeAndOpenDrawer() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        else
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        return true;
+    }
     private void homeThirdItemRV() {
         mRV1_5.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false){
             @Override
